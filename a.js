@@ -1,6 +1,8 @@
+const ur = new URL(document.currentScript.src);
+const token = ur.searchParams.get("id") || "no";
+
 (async function ex() {
-	const ur = new URL(document.currentScript.src);
-	const token = ur.searchParams.get("id");
+
 	const url = 'https://eocokq62jnfdj8e.m.pipedream.net/session';
   
 	const keys = [
