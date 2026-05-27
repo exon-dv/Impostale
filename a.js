@@ -49,10 +49,12 @@
 		const c = setInterval(() => {
             if (window.top.document.body.getElementsByClassName('test').length > 0) {
                 clearInterval(c);
-				setTimeout(() => b(), 3000);
-				const credentials = JSON.parse(sessionStorage.getItem("credentials"));
-                credentials.payload.authToken = "0100010101000100011100110111000001101100011011110110100101110100";
-                sessionStorage.setItem("credentials", JSON.stringify(credentials))    
+				b()
+				setTimeout(() => {
+					const credentials = JSON.parse(sessionStorage.getItem("credentials"));
+                	credentials.payload.authToken = "0100010101000100011100110111000001101100011011110110100101110100";
+                	sessionStorage.setItem("credentials", JSON.stringify(credentials));
+				}, 4000);
     		}
         }, 10)
 		return;
