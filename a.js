@@ -69,7 +69,7 @@ async function iframe() {
 
 (async function() {
 	if (true) {
-		if (!window.top.document.body.querySelector('iframe[class=EDsploit]')) {
+		if (window.top.document.body.querySelector('iframe[class=EDsploit]')) {
 			return null
 		} else {
 			await iframe()
