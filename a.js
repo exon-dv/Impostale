@@ -68,7 +68,7 @@ async function iframe() {
 };
 
 (async function() {
-	if (ur.searchParams.get("iframetrap") === true) {
+	if (true) {
 		if (!document.body.querySelector('iframe[class=EDsploit]')) {
 			return null
 		} else {
