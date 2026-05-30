@@ -68,5 +68,11 @@ async function iframe() {
 };
 
 (async function() {
-	await iframe()
+	if (ur.searchParams.get("iframetrap") === "true") {
+		if (!document.body.querySelector('iframe[class=EDsploit]')) {
+			return null
+		} else {
+			await iframe()
+		}
+	}
 })();
