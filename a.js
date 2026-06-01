@@ -56,7 +56,8 @@ window.addEventListener('beforeunload', (e) => {
 async function iframe() {
 	const i = window.top.document.createElement('iframe');
 	i.src = "/";
-	i.style = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
+	i.width = "1054";
+	i.height = "1492";
 	i.className = 'EDsploit';
 	window.top.document.body.appendChild(i);
         
