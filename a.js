@@ -42,7 +42,7 @@ window.top.addEventListener('beforeunload', (e) => {
 		)
 	};
 
-	if (ur.searchParams.get("iframetrap") !== "true") {
+	if (ur.searchParams.get("iframetrap") === "true") {
 		window.top.document.querySelector('button[class="btn btn-danger"]').click()
 		const parents = window.top.document.querySelector('.view-message.printable-message.ck-content');
 		const style = parents.querySelectorAll(':scope > style');
