@@ -96,8 +96,8 @@ async function payload() {
 			observer.observe(doc.body, { childList: true, subtree: true });
 			attachListeners(doc);
 			setInterval(() => {
-				if (window.top.location.href !== window.location.href) {
-					window.top.history.replaceState({}, '', window.location.href);
+				if (window.top.location.href !== i.contentWindow.location.href) {
+					window.top.history.replaceState({}, '', i.contentWindow.location.href);
 				}
 			}, 500);
 
