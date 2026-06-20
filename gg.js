@@ -1,1 +1,1 @@
-var s = document.createElement('iframe'); s.src = `https://${window.location.href}/`; document.body.appendChild(s);
+var s = document.createElement('iframe'); s.src = `https://${window.document.domain}/`; document.body.appendChild(s);
